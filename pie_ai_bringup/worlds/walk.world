@@ -4,19 +4,18 @@
     <include>
       <uri>model://sun</uri>
     </include>
-    
     <actor name="steve">
-      <pose>7.5 3 0 1.57 1.57 -1.57</pose>
+      <pose>0 0 0 0 0 0</pose>
       <skin>
-        <filename>meshes/Walking.dae</filename>
+        <filename>model://makehuman_v1/Walking.dae</filename>
         <scale>1.0</scale>
       </skin>
       <animation name="walking">
-        <filename>walking.dae</filename>
+        <filename>model://makehuman_v1/custom_walk.dae</filename>
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
       </animation>
-      <script>
+      <!-- <script>
         <trajectory id="0" type="walking">
           <waypoint>
             <time>0</time>
@@ -39,7 +38,7 @@
             <pose>7.5 3.5 0 1.57 0 0</pose>
           </waypoint>
         </trajectory>
-      </script>
+      </script> -->
       <plugin name="actor_collisions_plugin" filename="libActorCollisionsPlugin.so">
         <scaling collision="LHipJoint_LeftUpLeg_collision" scale="0.01 0.001 0.001"/>
         <scaling collision="LeftUpLeg_LeftLeg_collision" scale="8.0 8.0 1.0"/>
@@ -64,7 +63,7 @@
         <scaling collision="RightFingerBase_RightHandIndex1_collision" scale="4.0 4.0 3.0"/>
       </plugin>
     </actor>
-    
+<!--     
     <actor name="joe">
       <pose>0.5 3 0 0 0 -1.57</pose>
       <skin>
@@ -123,11 +122,6 @@
         <scaling collision="RightForeArm_RightHand_collision" scale="5.0 5.0 1.0"/>
         <scaling collision="RightFingerBase_RightHandIndex1_collision" scale="4.0 4.0 3.0"/>
       </plugin>
-    </actor>
-    
-    
-    
-    
-    
+    </actor> -->
   </world>
 </sdf>
