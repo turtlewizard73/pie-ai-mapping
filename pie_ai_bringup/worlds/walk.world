@@ -7,11 +7,11 @@
     <actor name="steve">
       <pose>0 0 0 0 0 0</pose>
       <skin>
-        <filename>model://makehuman_v1/Walking.dae</filename>
+        <filename>model://makehuman_v1/male.dae</filename>
         <scale>1.0</scale>
       </skin>
       <animation name="walking">
-        <filename>model://makehuman_v1/custom_walk.dae</filename>
+        <filename>model://makehuman_v1/walking.dae</filename>
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
       </animation>
