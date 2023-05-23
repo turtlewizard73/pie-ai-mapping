@@ -7,11 +7,11 @@
     <actor name="steve">
       <pose>0 0 0 0 0 0</pose>
       <skin>
-        <filename>model://makehuman_v1/male.dae</filename>
+        <filename>file://makehuman_male/meshes/male_v2.dae</filename>
         <scale>1.0</scale>
       </skin>
       <animation name="walking">
-        <filename>model://makehuman_v1/walking.dae</filename>
+        <filename>file://makehuman_male/animation/custom_walk.dae</filename>
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
       </animation>
@@ -39,7 +39,7 @@
           </waypoint>
         </trajectory>
       </script> -->
-      <plugin name="actor_collisions_plugin" filename="libActorCollisionsPlugin.so">
+      <!-- <plugin name="actor_collisions_plugin" filename="libActorCollisionsPlugin.so">
         <scaling collision="LHipJoint_LeftUpLeg_collision" scale="0.01 0.001 0.001"/>
         <scaling collision="LeftUpLeg_LeftLeg_collision" scale="8.0 8.0 1.0"/>
         <scaling collision="LeftLeg_LeftFoot_collision" scale="8.0 8.0 1.0"/>
@@ -61,7 +61,7 @@
         <scaling collision="RightArm_RightForeArm_collision" scale="5.0 5.0 1.0"/>
         <scaling collision="RightForeArm_RightHand_collision" scale="5.0 5.0 1.0"/>
         <scaling collision="RightFingerBase_RightHandIndex1_collision" scale="4.0 4.0 3.0"/>
-      </plugin>
+      </plugin> -->
     </actor>
 <!--     
     <actor name="joe">
