@@ -295,28 +295,28 @@
   </library_effects>
   <library_images>
     <image id="brown_eye_png" name="brown_eye_png">
-      <init_from>../textures/brown_eye.png</init_from>
+      <init_from>makehuman_male/textures/brown_eye.png</init_from>
     </image>
     <image id="eyebrow001_png" name="eyebrow001_png">
-      <init_from>../textures/eyebrow001.png</init_from>
+      <init_from>makehuman_male/textures/eyebrow001.png</init_from>
     </image>
     <image id="eyelashes01_png" name="eyelashes01_png">
-      <init_from>../textures/eyelashes01.png</init_from>
+      <init_from>makehuman_male/textures/eyelashes01.png</init_from>
     </image>
     <image id="male_casualsuit06_diffuse_png" name="male_casualsuit06_diffuse_png">
-      <init_from>../textures/male_casualsuit06_diffuse.png</init_from>
+      <init_from>makehuman_male/textures/male_casualsuit06_diffuse.png</init_from>
     </image>
     <image id="shoes01_diffuse_png" name="shoes01_diffuse_png">
-      <init_from>../textures/shoes01_diffuse.png</init_from>
+      <init_from>makehuman_male/textures/shoes01_diffuse.png</init_from>
     </image>
     <image id="teeth_png" name="teeth_png">
-      <init_from>../textures/teeth.png</init_from>
+      <init_from>makehuman_male/textures/teeth.png</init_from>
     </image>
     <image id="tongue01_diffuse_png" name="tongue01_diffuse_png">
-      <init_from>../textures/tongue01_diffuse.png</init_from>
+      <init_from>makehuman_male/textures/tongue01_diffuse.png</init_from>
     </image>
     <image id="young_darkskinned_male_diffuse_png" name="young_darkskinned_male_diffuse_png">
-      <init_from>../textures/young_darkskinned_male_diffuse.png</init_from>
+      <init_from>makehuman_male/textures/young_darkskinned_male_diffuse.png</init_from>
     </image>
   </library_images>
   <library_materials>

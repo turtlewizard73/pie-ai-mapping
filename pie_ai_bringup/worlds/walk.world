@@ -10,11 +10,11 @@
         <filename>file://makehuman_male/meshes/male_v2.dae</filename>
         <scale>1.0</scale>
       </skin>
-      <animation name="walking">
-        <filename>file://makehuman_male/animation/custom_walk.dae</filename>
+      <!-- <animation name="walking">
+        <filename>file://makehuman_male/animation/walking.dae</filename>
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
-      </animation>
+      </animation> -->
       <!-- <script>
         <trajectory id="0" type="walking">
           <waypoint>
