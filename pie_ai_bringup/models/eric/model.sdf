@@ -1,0 +1,30 @@
+<?xml version='1.7'?>
+<sdf version="1.7">
+  <model name="Eric">
+    <!-- <static>false</static> -->
+    <link name="link">
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>80.0</mass>
+        <inertia>
+          <ixx>24.88</ixx>
+          <ixy>0.0</ixy>         
+          <ixz>0.0</ixz>         
+          <iyy>25.73</iyy> 
+          <iyz>0.0</iyz>   
+          <izz>2.48</izz> 
+        </inertia>
+      </inertial>
+
+
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+            <mesh>
+                <uri>model://eric/meshes/eric-rigged-001.dae</uri>
+            </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
