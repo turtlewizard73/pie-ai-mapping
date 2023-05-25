@@ -1,7 +1,7 @@
 <?xml version='1.7'?>
 <sdf version="1.7">
   <model name="Male">
-    <!-- <static>false</static> -->
+    <static>false</static>
     <link name="link">
       <inertial>
         <pose>0 0 0.5 0 0 0</pose>
@@ -25,6 +25,14 @@
         </geometry>
       </collision>
 
+     <collision name="person">
+        <pose>0 0 0.02 0 0 1.57</pose>
+        <geometry>
+            <mesh>
+                <uri>model://Male/meshes/male.dae</uri>
+            </mesh>
+        </geometry>
+      </collision>
 
       <visual name="visual">
         <pose>0 0 0 0 0 0</pose>
