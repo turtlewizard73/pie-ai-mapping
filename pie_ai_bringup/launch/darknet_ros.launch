@@ -3,7 +3,7 @@
 <launch>
   <!-- Console launch prefix -->
   <arg name="launch_prefix" default=""/>
-  <arg name="image" default="/rgb_camera/rgb/image_raw" />
+  <arg name="image" default="/rgb_camera/rgb/image_raw/compressed" />
 
   <!-- Config and weights folder. -->
   <arg name="yolo_weights_path"          default="$(find darknet_ros)/yolo_network_config/weights"/>
@@ -24,5 +24,5 @@
     <remap from="camera/rgb/image_raw"  to="$(arg image)" />
   </node>
 
- <!-- <node name="republish" type="republish" pkg="image_transport" output="screen" 	args="compressed in:=/front_camera/image_raw raw out:=/camera/image_raw" /> -->
+ <!-- <node name="republish" type="republish" pkg="image_transport" output="screen" 	args="compressed in:=/rgb_camera/rgb/image_raw raw out:=/camera/image_raw" /> -->
 </launch>

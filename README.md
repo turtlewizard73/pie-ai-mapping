@@ -4,3 +4,4 @@ depends on project: https://github.com/turtlewizard73/pie-mapping-and-navigation
 
 cd yolo
 pip install -r requirements.txt
+catkin_make --make-args run_tests
