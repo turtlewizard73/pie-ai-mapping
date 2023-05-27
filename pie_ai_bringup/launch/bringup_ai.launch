@@ -3,7 +3,7 @@
 <launch>
 
   <arg name="rvizconfig" default="$(find pie_ai_bringup)/config/pie_sim.rviz" />
-  <arg name="world" default="$(find pie_bringup)/worlds/world_basic_actors.world" />
+  <arg name="world" default="$(find pie_bringup)/worlds/world_tables_chairs.world" />
   <arg name="map_file" default="$(find pie_bringup)/maps/world_basic/map.yaml"/>
   <arg name="x_pos" default="2.5"/>
   <arg name="y_pos" default="0.1"/>
