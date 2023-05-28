@@ -1,13 +1,12 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 78
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /global_plan1
-      Splitter Ratio: 0.41910332441329956
-    Tree Height: 458
+      Splitter Ratio: 0.4835589826107025
+    Tree Height: 520
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -50,7 +49,7 @@ Visualization Manager:
           Value: true
         imu_link:
           Value: true
-        rgb_camera_link:
+        rgbd_camera_link:
           Value: true
         wheel_left_link:
           Value: true
@@ -71,7 +70,7 @@ Visualization Manager:
               {}
             imu_link:
               {}
-            rgb_camera_link:
+            rgbd_camera_link:
               {}
             wheel_left_link:
               {}
@@ -121,7 +120,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        rgb_camera_link:
+        rgbd_camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -262,7 +261,7 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.07000000029802322
       Head Radius: 0.029999999329447746
-      Name: pose_estimation
+      Name: pose-estimation
       Queue Size: 10
       Shaft Length: 0.23000000417232513
       Shaft Radius: 0.009999999776482582
@@ -275,7 +274,7 @@ Visualization Manager:
       Color Scheme: costmap
       Draw Behind: true
       Enabled: true
-      Name: global_costmap
+      Name: global-costmap
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
@@ -285,7 +284,7 @@ Visualization Manager:
       Color Scheme: costmap
       Draw Behind: false
       Enabled: true
-      Name: local_costmap
+      Name: local-costmap
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
@@ -300,7 +299,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Billboards
       Line Width: 0.029999999329447746
-      Name: global_plan
+      Name: global-plan
       Offset:
         X: 0
         Y: 0
@@ -324,7 +323,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Billboards
       Line Width: 0.05000000074505806
-      Name: local_plan
+      Name: local-plan
       Offset:
         X: 0
         Y: 0
@@ -342,14 +341,14 @@ Visualization Manager:
       Enabled: false
       Image Rendering: overlay
       Image Topic: /rgb_camera/rgb/image_raw
-      Name: rgb_camera
+      Name: rgb-camera
       Overlay Alpha: 0.8999999761581421
       Queue Size: 2
       Transport Hint: compressed
       Unreliable: false
       Value: false
       Visibility:
-        Camera: true
+        "": true
         Grid: true
         InteractiveMarkers: true
         Map: true
@@ -364,18 +363,20 @@ Visualization Manager:
         local_costmap: true
         local_plan: true
         pose_estimation: true
+        rgb_camera_compressed: true
       Zoom Factor: 1
     - Class: rviz/Camera
-      Enabled: true
+      Enabled: false
       Image Rendering: background and overlay
       Image Topic: /rgb_camera/rgb/image_raw
-      Name: rgb_camera_compressed
+      Name: rgb-camera/compressed
       Overlay Alpha: 0.5
       Queue Size: 2
       Transport Hint: compressed
       Unreliable: false
-      Value: true
+      Value: false
       Visibility:
+        "": true
         Grid: true
         InteractiveMarkers: true
         Map: true
@@ -391,6 +392,64 @@ Visualization Manager:
         local_plan: true
         pose_estimation: true
         rgb_camera: true
+      Zoom Factor: 1
+    - Class: rviz/Camera
+      Enabled: true
+      Image Rendering: background and overlay
+      Image Topic: /depth_camera/rgb/image_raw
+      Name: depth-camera/rgb-image
+      Overlay Alpha: 0.5
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+      Visibility:
+        Grid: true
+        InteractiveMarkers: true
+        Map: true
+        Path: true
+        PoseWithCovariance: true
+        RobotModel: true
+        TF: true
+        Value: true
+        depth-camera/depth-image: true
+        global-costmap: true
+        global-plan: true
+        lidar: true
+        local-costmap: true
+        local-plan: true
+        pose-estimation: true
+        rgb-camera: true
+        rgb-camera/compressed: true
+      Zoom Factor: 1
+    - Class: rviz/Camera
+      Enabled: false
+      Image Rendering: background and overlay
+      Image Topic: /depth_camera/depth/image_raw
+      Name: depth-camera/depth-image
+      Overlay Alpha: 0.5
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+      Visibility:
+        Grid: true
+        InteractiveMarkers: true
+        Map: true
+        Path: true
+        PoseWithCovariance: true
+        RobotModel: true
+        TF: true
+        Value: true
+        depth-camera/rgb-image: true
+        global-costmap: true
+        global-plan: true
+        lidar: true
+        local-costmap: true
+        local-plan: true
+        pose-estimation: true
+        rgb-camera: true
+        rgb-camera/compressed: true
       Zoom Factor: 1
   Enabled: true
   Global Options:
@@ -446,7 +505,7 @@ Window Geometry:
   Height: 999
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000002070000034dfc020000000cfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000253000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d00650072006100000002eb0000009d0000000000000000fb0000000c00430061006d00650072006101000002cd000000f50000000000000000fb00000014007200670062005f00630061006d0065007200610000000225000000970000001600fffffffb0000002a007200670062005f00630061006d006500720061005f0063006f006d00700072006500730073006500640100000294000000f40000001600ffffff000000010000010f0000034dfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003b0000034d000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007740000003efc0100000002fb0000000800540069006d00650100000000000007740000030700fffffffb0000000800540069006d00650100000000000004500000000000000000000004520000034d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000002070000034dfc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000243000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d00650072006100000002eb0000009d0000000000000000fb0000000c00430061006d00650072006101000002cd000000f50000000000000000fb00000014007200670062002d00630061006d0065007200610000000225000000970000001600fffffffb0000002a007200670062002d00630061006d006500720061002f0063006f006d00700072006500730073006500640000000203000000b90000001600fffffffb0000000c00430061006d00650072006100000001fa000000c20000000000000000fb0000002c00640065007000740068002d00630061006d006500720061002f007200670062002d0069006d0061006700650100000284000001040000001600fffffffb0000003000640065007000740068002d00630061006d006500720061002f00640065007000740068002d0069006d00610067006500000002c2000000c60000001600ffffff000000010000010f0000034dfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003b0000034d000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007740000003efc0100000002fb0000000800540069006d00650100000000000007740000030700fffffffb0000000800540069006d00650100000000000004500000000000000000000004520000034d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -458,7 +517,11 @@ Window Geometry:
   Width: 1908
   X: -32
   Y: -32
-  rgb_camera:
+  depth-camera/depth-image:
     collapsed: false
-  rgb_camera_compressed:
+  depth-camera/rgb-image:
+    collapsed: false
+  rgb-camera:
+    collapsed: false
+  rgb-camera/compressed:
     collapsed: false

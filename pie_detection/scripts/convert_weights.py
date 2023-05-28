@@ -1,8 +1,8 @@
 import numpy as np
 import os
 import pathlib
-from detect import YOLOv3Net
-from detect import parse_cfg
+from yolov3 import YOLOv3Net
+from yolov3 import parse_cfg
 
 
 def load_weights(model,cfgfile,weightfile):

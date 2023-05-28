@@ -18,11 +18,18 @@
     <arg name="z_pos" value="$(arg z_pos)"/>
     <arg name="yaw_pos" value="$(arg yaw_pos)"/>
     <arg name="visualize_laser" value="false"/>
-    <arg name="use_camera" value="true"/>
+    <arg name="use_camera" value="false"/>
     <arg name="visualize_camera" value="true"/>
+    <arg name="use_rgbd_camera" value="true"/>
+    <arg name="visualize_rgbd_camera" value="true"/>
+    <arg name="gazebo_gui" value="false"/>
   </include>
 
   <!-- Launch Rviz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+
+  <node name="image_detector" pkg="pie_detection" type="image_detector.py">
+    <remap from="/rgb_camera/rgb/image_raw/compressed" to="/depth_camera/rgb/image_raw/compressed"/>
+  </node>
 
 </launch>
