@@ -2,14 +2,27 @@
 
 <launch>
 
-  <!-- RViz config file -->
-  <arg name="rvizconfig" default="$(find pie_bringup)/config/pie_sim.rviz" />
-  <arg name="world" default="$(find pie_bringup)/worlds/world_basic_actors.world" />
+  <arg name="rvizconfig" default="$(find pie_ai_bringup)/config/pie_sim.rviz" />
+  <arg name="world" default="$(find pie_ai_bringup)/worlds/test_features.world" />
+  <arg name="map_file" default="$(find pie_bringup)/maps/world_basic/map.yaml"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="yaw_pos" default="1.57"/>
 
-  <!-- Bringup with camera -->
-  <include file="$(find pie_bringup)/launch/bringup.launch">
+  <!-- Launch simulation with camera -->
+  <include file="$(find pie_bringup)/launch/simulation.launch">
     <arg name="world" value="$(arg world)"/>
-    <arg name="rvizconfig" value="$(arg rvizconfig)"/>
+    <arg name="x_pos" value="$(arg x_pos)"/>
+    <arg name="y_pos" value="$(arg y_pos)"/>
+    <arg name="z_pos" value="$(arg z_pos)"/>
+    <arg name="yaw_pos" value="$(arg yaw_pos)"/>
+    <arg name="visualize_laser" value="false"/>
     <arg name="use_camera" value="true"/>
+    <arg name="visualize_camera" value="true"/>
   </include>
+
+  <!-- Launch Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+
 </launch>

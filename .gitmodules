@@ -1,0 +1,6 @@
+[submodule "yolov7"]
+	path = yolov7
+	url = https://github.com/WongKinYiu/yolov7.git
+[submodule "darknet_ros"]
+	path = darknet_ros
+	url = https://github.com/leggedrobotics/darknet_ros.git
