@@ -46,7 +46,8 @@ def main():
         max_output_size_per_class=max_output_size_per_class,
         iou_threshold=iou_threshold,
         confidence_threshold=confidence_threshold)
-
+    boxok=boxes.numpy()
+    print(boxok[0][0])
     image = np.squeeze(image)
     img = draw_outputs(image, boxes, scores, classes, nums, class_names)
 

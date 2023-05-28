@@ -44,8 +44,12 @@ class YoloV3Net():
             iou_threshold=self.iou_threshold,
             confidence_threshold=self.confidence_threshold)
         
+        print(boxes, scores, classes, nums)
+        
         image = np.squeeze(image)
         img = draw_outputs(image, boxes, scores, classes, nums, self.class_names)
+        # return img
+        output = [img, boxes[0], scores[0], classes[0], nums[0]]
         return img
 
     def load_model(self, cfgfile, model_size, num_classes):

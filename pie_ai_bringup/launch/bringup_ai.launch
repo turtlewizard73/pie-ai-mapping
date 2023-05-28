@@ -28,8 +28,6 @@
   <!-- Launch Rviz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
 
-  <node name="image_detector" pkg="pie_detection" type="image_detector.py">
-    <remap from="/rgb_camera/rgb/image_raw/compressed" to="/depth_camera/rgb/image_raw/compressed"/>
-  </node>
+  <!-- <node name="image_detector" pkg="pie_detection" type="image_detector.py"/> -->
 
 </launch>
