@@ -4,6 +4,7 @@
 import cv2
 import numpy as np
 import tf
+import math
 from tf2_ros.buffer import Buffer
 
 # Ros modules
@@ -12,20 +13,17 @@ from nav_msgs.msg import OccupancyGrid
 from visualization_msgs.msg import Marker
 
 # Custom modules
-from pie_detection.msg import CamPose
+from pie_detection.msg import CamPose, CamPoses
 from cvthread import ProcessThread, cvThread, BufferQueue
 
 # https://github.com/awesomebytes/occupancy_grid_python
 class PoseEnplacer():
     def __init__(self) -> None:
-        self.map_sub = rospy.Subscriber(
-            '/map',
-            OccupancyGrid,
-            self.map_callback
-        )
+        self.horizontal_fov = 1.047
+        self.pixel_width = 640
         self.object_pose_sub = rospy.Subscriber(
-            '/detection/campose',
-            CamPose,
+            '/detection/camposes',
+            CamPoses,
             self.object_pose_callback
         )
 
@@ -43,53 +41,56 @@ class PoseEnplacer():
             queue_size=1
         )
 
-    def map_callback(self, msg):
-        self.map_queue.put(msg)
+    def object_pose_callback(self, msg):
+        print('cooking')
+        i = 0
+        for pose in msg.poses:
+            print(pose)
+            name = pose.name
+            depth = pose.mean_depth * 5
+            x_min = pose.x_min*2
+            x_max = pose.x_max*2
 
-    def object_pose_callback(self, trans, rot):
-        # depth = msg.mean_depth
-        # x_min = msg.x_min
-        # x_max = msg.x_max
-        depth = 0
-        x_min = 0
-        x_max = 0
-        x = (x_max + x_min) /2
+            valid_width = 2*depth*math.atan(self.horizontal_fov/2)
 
-        # trans, rot = self.robot_pose_on_map()
+            valid_x_min = x_min / self.pixel_width * valid_width
+            valid_x_max = x_max / self.pixel_width * valid_width
+            center = (valid_x_min + valid_x_max) / 2
 
-        marker = Marker()
-        marker.header.frame_id = 'base_link'
-        marker.header.stamp = rospy.Time.now()
-        marker.ns = 'detected_objects'
-        marker.id = 0
-        marker.type = Marker.CUBE
-        marker.action = Marker.ADD
+            marker = Marker()
+            marker.header.frame_id = 'base_link'
+            marker.header.stamp = rospy.Time.now()
+            marker.ns = name
+            marker.id = i
+            marker.type = Marker.CUBE
+            marker.action = Marker.ADD
 
-        marker.pose.position.x = 0 + depth
-        marker.pose.position.y = 0
-        marker.pose.position.z = 0
-        marker.pose.orientation.x = 0
-        marker.pose.orientation.y = 0
-        marker.pose.orientation.z = 0
-        marker.pose.orientation.w = 0
+            marker.pose.position.x = depth
+            marker.pose.position.y = -(-valid_width/2 + center)
+            marker.pose.position.z = 0
+            marker.pose.orientation.x = 0
+            marker.pose.orientation.y = 0
+            marker.pose.orientation.z = 0
+            marker.pose.orientation.w = 0
 
-        marker.scale.x = 0.2
-        marker.scale.y = 0.1
-        marker.scale.z = 0.1
-        marker.color.a = 1.0 # Don't forget to set the alpha!
-        marker.color.r = 0.0
-        marker.color.g = 1.0
-        marker.color.b = 0.0
+            marker.scale.x = 0.2
+            marker.scale.y = valid_x_max - valid_x_min
+            marker.scale.z = 0.1
+            marker.color.a = 1.0 # Don't forget to set the alpha!
+            marker.color.r = 0.0
+            marker.color.g = 1.0
+            marker.color.b = 0.0
 
-        self.marker_pub.publish(marker)
+            i = i+1
+            self.marker_pub.publish(marker)
 
-    def robot_pose_on_map(self):
-        trans, rot = 0, 0
-        try:
-            (trans,rot) = listener.lookupTransform('/map', '/base_link', rospy.Time(0))
-        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
-            print(e)
-        return trans, rot
+    # def robot_pose_on_map(self):
+    #     trans, rot = 0, 0
+    #     try:
+    #         (trans,rot) = listener.lookupTransform('/map', '/base_link', rospy.Time(0))
+    #     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
+    #         print(e)
+    #     return trans, rot
     
 
 def main():
@@ -107,18 +108,19 @@ def main():
 if __name__ == '__main__':
     rospy.init_node('turtle_tf_listener')
 
-    listener = tf.TransformListener()
+    # listener = tf.TransformListener()
     pose_enplacer = PoseEnplacer()
+    rospy.spin()
 
-    rate = rospy.Rate(10.0)
-    while not rospy.is_shutdown():
-        trans, rot = pose_enplacer.robot_pose_on_map()
-        try:
-            (trans,rot) = listener.lookupTransform('/base_link', '/map', rospy.Time(0))
-        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
-            print(e)
-            continue
-        print(trans, rot)
-        pose_enplacer.object_pose_callback(trans, rot)
+    # rate = rospy.Rate(10.0)
+    # while not rospy.is_shutdown():
+    #     trans, rot = pose_enplacer.robot_pose_on_map()
+    #     try:
+    #         (trans,rot) = listener.lookupTransform('/base_link', '/map', rospy.Time(0))
+    #     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
+    #         print(e)
+    #         continue
+    #     print(trans, rot)
+    #     pose_enplacer.object_pose_callback(trans, rot)
 
-        rate.sleep()
+    #     rate.sleep()

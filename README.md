@@ -17,8 +17,11 @@ yolo weigths: https://pjreddie.com/darknet/yolo/
 
 people detection:
     yolos scriptek:
-        https://machinelearningspace.com/yolov3-tensorflow-2-part-4/
-        https://github.com/RahmadSadli/Deep-Learning/tree/master/YOLOv3_TF2
+https://machinelearningspace.com/yolov3-tensorflow-2-part-1/
+https://machinelearningspace.com/yolov3-tensorflow-2-part-2/
+https://machinelearningspace.com/yolov3-tensorflow-2-part-3/
+https://machinelearningspace.com/yolov3-tensorflow-2-part-4/
+https://github.com/RahmadSadli/Deep-Learning/tree/master/YOLOv3_TF2
 
     cuda telepítés:
         https://towardsdatascience.com/how-to-finally-install-tensorflow-gpu-on-windows-10-63527910f255
@@ -31,3 +34,5 @@ people detection:
         https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/
 
 install: bottleneck
+
+## Setup and install

@@ -10,7 +10,7 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image, CompressedImage, CameraInfo
 from geometry_msgs.msg import Twist, Point
 import rospy
-from pie_detection.msg import CamPose
+from pie_detection.msg import CamPose, CamPoses
 # Custom modules
 from yolov3_net import YoloV3Net
 from cvthread import ProcessThread, cvThread, BufferQueue
@@ -50,8 +50,8 @@ class ImageDetectorNode():
             Image,
             self.depth_image_callback)
         self.position_pub = rospy.Publisher(
-            '/detection/campose',
-            CamPose,
+            '/detection/camposes',
+            CamPoses,
             queue_size=1)
         self.depth_camera_thread = ProcessThread(
             queue_in_image=self.depth_image_queue,
@@ -101,19 +101,25 @@ class ImageDetectorNode():
 
     def segment(self, depth_image, _input):
         segmented_depth_img, output = None, None
+        
         # _inpu = [boxes[0], scores[0], classes[0], nums[0]]
         boxes, scores, classes, nums = _input[0], _input[1], _input[2], _input[3]
+        print(boxes, scores, classes, nums)
         boxes=np.array(boxes)
         f = 0.5
         depth_image = cv2.resize(depth_image, (0,0), fx = f, fy = f)
 
+        poses = []
+        output_img = np.zeros(depth_image.shape[:2], np.float32)
         for i in range(nums):
+            cam_pose = CamPose()
             mask_rectangle = np.zeros(depth_image.shape[:2], np.float32)
             x1, y1 = tuple((boxes[i,0:2] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
             x2, y2 = tuple((boxes[i,2:4] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
             d = 5 # how many pixel boundaries added
             mask_rectangle[y1-d:y2+d, x1-d:x2+d] = 1.0
             segmented_depth_img = depth_image * mask_rectangle
+            output_img = output_img + segmented_depth_img
 
             segmented_depth_img[segmented_depth_img == 0.0] = np.nan
             mean_distance = bn.nanmean(segmented_depth_img)
@@ -122,12 +128,18 @@ class ImageDetectorNode():
             # max_distance = np.nanmax(segmented_depth_img)
 
         # output = [mean_distance, min_distance, max_distance, x1, x2]
-            output = CamPose()
-            output.mean_depth = mean_distance
-            output.x_min = x1
-            output.x_max = x2
+            cam_pose.mean_depth = mean_distance
+            cam_pose.x_min = x1 if x1 >= 0 else 1
+            cam_pose.x_max = x2 if x2 <= 640/2 else 640/2
+            cam_pose.name = self.tf_net.class_names[int(classes[i])]
+
+            poses.append(cam_pose)
         # output = [mean_distance, x1, x2]
-        return segmented_depth_img, output
+
+        output = CamPoses()
+        output.poses = poses
+        print(output)
+        return output_img, output
 
 
 def main():

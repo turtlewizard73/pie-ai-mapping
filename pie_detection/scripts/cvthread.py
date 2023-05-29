@@ -82,6 +82,7 @@ class cvThread(threading.Thread):
             self.images = []
             for queue, name in zip(self.queues, self.window_names):
                 image = queue.get()
+
                 cv2.imshow(name, image)
 
             # Process the current image

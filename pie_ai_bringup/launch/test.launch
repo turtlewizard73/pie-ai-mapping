@@ -22,7 +22,7 @@
     <arg name="visualize_camera" value="true"/>
     <arg name="use_rgbd_camera" value="true"/>
     <arg name="visualize_rgbd_camera" value="true"/>
-    <arg name="gazebo_gui" value="true"/>
+    <arg name="gazebo_gui" value="false"/>
   </include>
 
   <!-- Launch Rviz -->
