@@ -46,31 +46,34 @@ class PoseEnplacer():
     def map_callback(self, msg):
         self.map_queue.put(msg)
 
-    def object_pose_callback(self, msg):
-        depth = msg.mean_depth
-        x_min = msg.x_min
-        x_max = msg.x_max
+    def object_pose_callback(self, trans, rot):
+        # depth = msg.mean_depth
+        # x_min = msg.x_min
+        # x_max = msg.x_max
+        depth = 0
+        x_min = 0
+        x_max = 0
         x = (x_max + x_min) /2
 
-        trans, rot = self.robot_pose_on_map()
+        # trans, rot = self.robot_pose_on_map()
 
         marker = Marker()
-        marker.header.frame_id = 'map'
+        marker.header.frame_id = 'base_link'
         marker.header.stamp = rospy.Time.now()
         marker.ns = 'detected_objects'
         marker.id = 0
         marker.type = Marker.CUBE
         marker.action = Marker.ADD
 
-        marker.pose.position.x = trans[0] + depth
-        marker.pose.position.y = trans[1]
-        marker.pose.position.z = trans[2]
-        marker.pose.orientation.x = rot[0]
-        marker.pose.orientation.y = rot[1]
-        marker.pose.orientation.z = rot[2]
-        marker.pose.orientation.w = rot[3]
+        marker.pose.position.x = 0 + depth
+        marker.pose.position.y = 0
+        marker.pose.position.z = 0
+        marker.pose.orientation.x = 0
+        marker.pose.orientation.y = 0
+        marker.pose.orientation.z = 0
+        marker.pose.orientation.w = 0
 
-        marker.scale.x = 1
+        marker.scale.x = 0.2
         marker.scale.y = 0.1
         marker.scale.z = 0.1
         marker.color.a = 1.0 # Don't forget to set the alpha!
@@ -81,18 +84,13 @@ class PoseEnplacer():
         self.marker_pub.publish(marker)
 
     def robot_pose_on_map(self):
-        while True:
-            try:
-                (trans, rot) = self.listener.lookupTransform(
-                    '/base_link',
-                    '/map',
-                    rospy.Time.now())
-            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
-                print(e)
-            else:
-                break
-
+        trans, rot = 0, 0
+        try:
+            (trans,rot) = listener.lookupTransform('/map', '/base_link', rospy.Time(0))
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
+            print(e)
         return trans, rot
+    
 
 def main():
     print("OpenCV version: %s" % cv2.__version__)
@@ -101,10 +99,26 @@ def main():
     pose_enplacer = PoseEnplacer()
     tf_buffer = Buffer()
     listener = tf.TransformListener(tf_buffer)
-    listener.waitForTransform('/base_link', '/map', rospy.Time.now(), rospy.Duration(5.0))
-    pose_enplacer.listener = listener
+
 
     rospy.spin()
 
+
 if __name__ == '__main__':
-    main()
+    rospy.init_node('turtle_tf_listener')
+
+    listener = tf.TransformListener()
+    pose_enplacer = PoseEnplacer()
+
+    rate = rospy.Rate(10.0)
+    while not rospy.is_shutdown():
+        trans, rot = pose_enplacer.robot_pose_on_map()
+        try:
+            (trans,rot) = listener.lookupTransform('/base_link', '/map', rospy.Time(0))
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) as e:
+            print(e)
+            continue
+        print(trans, rot)
+        pose_enplacer.object_pose_callback(trans, rot)
+
+        rate.sleep()
