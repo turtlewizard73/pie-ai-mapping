@@ -12,3 +12,6 @@ https://towardsdatascience.com/how-to-finally-install-tensorflow-gpu-on-wsl2-7be
 https://towardsdatascience.com/how-to-finally-install-tensorflow-gpu-on-windows-10-63527910f255
 https://www.tensorflow.org/install/pip#windows-wsl2_1
 https://docs.nvidia.com/cuda/wsl-user-guide/index.html
+
+yolo weigths: https://pjreddie.com/darknet/yolo/
+people detection:

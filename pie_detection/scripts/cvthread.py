@@ -22,7 +22,7 @@ class BufferQueue(Queue):
 
 class ProcessThread(threading.Thread):
     def __init__(
-            self, queue_in_image, queue_in_data, queue_out_image, queue_out_data, window_name, image_process_func) -> None:
+            self, queue_in_image, queue_in_data, queue_out_image, queue_out_data, window_name, image_process_func, publisher) -> None:
         threading.Thread.__init__(self)
         self.cvbridge = CvBridge()
         self.queue_in_image = queue_in_image
@@ -32,6 +32,7 @@ class ProcessThread(threading.Thread):
         self.image = None
         self.window_name = window_name
         self.image_process_func = image_process_func
+        self.publisher = publisher
 
     def run(self) -> None:
         # Create a single OpenCV window
@@ -49,8 +50,12 @@ class ProcessThread(threading.Thread):
             img, _output = self.image_process_func(self.image, _input)
 
             self.queue_out_image.put(img)
-            self.queue_out_data.put(_output)
 
+            if (self.publisher is not None) and (_output is not None):
+                self.publisher.publish(_output)
+            else:
+                self.queue_out_data.put(_output)
+            
             # cv2_img = return_tuple[0]
             # try:
             #     img = self.cvbridge.cv2_to_compressed_imgmsg(cv2_img)

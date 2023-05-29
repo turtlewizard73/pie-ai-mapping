@@ -3,13 +3,14 @@
 # Python modules
 import cv2
 import numpy as np
+import bottleneck as bn
 
 # Ros modules
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image, CompressedImage, CameraInfo
 from geometry_msgs.msg import Twist, Point
 import rospy
-
+from pie_detection.msg import CamPose
 # Custom modules
 from yolov3_net import YoloV3Net
 from cvthread import ProcessThread, cvThread, BufferQueue
@@ -35,6 +36,7 @@ class ImageDetectorNode():
             queue_out_data=self.detected_data_queue,
             window_name='rgb-image-detected',
             image_process_func=self.tf_net.detect,
+            publisher=None
         )
         self.rgb_camera_thread.setDaemon(True)
         self.rgb_camera_thread.start()
@@ -47,13 +49,18 @@ class ImageDetectorNode():
             '/depth_camera/depth/image_raw',
             Image,
             self.depth_image_callback)
+        self.position_pub = rospy.Publisher(
+            '/detection/campose',
+            CamPose,
+            queue_size=1)
         self.depth_camera_thread = ProcessThread(
             queue_in_image=self.depth_image_queue,
             queue_in_data=self.detected_data_queue,
             queue_out_image=self.segmented_image_queue,
             queue_out_data=self.segmented_data_queue,
             window_name='depth-image-segmented',
-            image_process_func=self.same,
+            image_process_func=self.segment,
+            publisher=self.position_pub
         )
         self.depth_camera_thread.setDaemon(True)
         self.depth_camera_thread.start()
@@ -64,16 +71,8 @@ class ImageDetectorNode():
         )
         self.display_thread.setDaemon(True)
         self.display_thread.start()
-     
-        self.detected_image_pub = rospy.Publisher(
-            '/detection/image',
-            CompressedImage,
-            queue_size=1)
+          
         
-        self.segmented_image_pub = rospy.Publisher(
-            '/detection/segmented',
-            CompressedImage,
-            queue_size=1)
         
     def rgb_image_callback(self, msg) -> None:
         try:
@@ -100,26 +99,34 @@ class ImageDetectorNode():
         image = img
         return [image, True]
 
-    def segment(self, image, depth_image, boxes, scores, classes, nums):
-        input_tuple = self.detected_image_queue.get()
-        boxes, scores, classes, nums = input_tuple[1], input_tuple[2], input_tuple[3], input_tuple[4]
+    def segment(self, depth_image, _input):
+        # _inpu = [boxes[0], scores[0], classes[0], nums[0]]
+        boxes, scores, classes, nums = _input[0], _input[1], _input[2], _input[3]
         boxes=np.array(boxes)
         f = 0.5
         depth_image = cv2.resize(depth_image, (0,0), fx = f, fy = f)
 
         for i in range(nums):
-            mask_rectangle = np.zeros(image.shape[:2], np.float32)
-            x1, y1 = tuple((boxes[i,0:2] * [image.shape[1], image.shape[0]]).astype(np.int32))
-            x2, y2 = tuple((boxes[i,2:4] * [image.shape[1], image.shape[0]]).astype(np.int32))
-            mask_rectangle[y1:y2, x1:x2] = 1.0
+            mask_rectangle = np.zeros(depth_image.shape[:2], np.float32)
+            x1, y1 = tuple((boxes[i,0:2] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
+            x2, y2 = tuple((boxes[i,2:4] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
+            d = 5 # how many pixel boundaries added
+            mask_rectangle[y1-d:y2+d, x1-d:x2+d] = 1.0
             segmented_depth_img = depth_image * mask_rectangle
 
-            mean_distance = np.mean(segmented_depth_img)
-            min_distance = np.nanmin(segmented_depth_img)
-            max_distance = np.nanmax(segmented_depth_img)
+            segmented_depth_img[segmented_depth_img == 0.0] = np.nan
+            mean_distance = bn.nanmean(segmented_depth_img)
+            
+            # min_distance = np.nanmin(segmented_depth_img)
+            # max_distance = np.nanmax(segmented_depth_img)
 
-        output = [segmented_depth_img, mean_distance, min_distance, max_distance]
-        return output
+        # output = [mean_distance, min_distance, max_distance, x1, x2]
+        output = CamPose()
+        output.mean_depth = mean_distance
+        output.x_min = x1
+        output.x_max = x2
+        # output = [mean_distance, x1, x2]
+        return segmented_depth_img, output
 
 
 def main():
