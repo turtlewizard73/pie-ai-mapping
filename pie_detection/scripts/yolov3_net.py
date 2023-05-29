@@ -30,8 +30,8 @@ class YoloV3Net():
 
         self.class_names = load_class_names(self.class_name)
 
-    def detect(self, image):
-        image = np.array(image)
+    def detect(self, img, _input):
+        image = np.array(img)
         image = tf.expand_dims(image, 0)
         resized_frame = resize_image(image, (self.model_size[0], self.model_size[1]))
         pred = self.model.predict(resized_frame)
@@ -44,13 +44,11 @@ class YoloV3Net():
             iou_threshold=self.iou_threshold,
             confidence_threshold=self.confidence_threshold)
         
-        print(boxes, scores, classes, nums)
-        
         image = np.squeeze(image)
         img = draw_outputs(image, boxes, scores, classes, nums, self.class_names)
         # return img
-        output = [img, boxes[0], scores[0], classes[0], nums[0]]
-        return img
+        output = [boxes[0], scores[0], classes[0], nums[0]]
+        return img, output
 
     def load_model(self, cfgfile, model_size, num_classes):
         blocks = self.parse_cfg(cfgfile)

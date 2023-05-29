@@ -22,14 +22,17 @@ class ImageDetectorNode():
 
         ## init rgb image utilites
         self.rgb_image_queue = BufferQueue(self.queueSize)
-        self.detected_image_queue = BufferQueue(self.queueSize)  # img, boxes[0], scores[0], classes[0], nums[0]
+        self.detected_image_queue = BufferQueue(self.queueSize)  # img
+        self.detected_data_queue = BufferQueue(self.queueSize)  # boxes[0], scores[0], classes[0], nums[0]
         self.rgb_image_sub = rospy.Subscriber(
             '/depth_camera/rgb/image_raw/compressed',
             CompressedImage,
             self.rgb_image_callback)
         self.rgb_camera_thread = ProcessThread(
-            queue_in=self.rgb_image_queue,
-            queue_out=self.detected_image_queue,
+            queue_in_image=self.rgb_image_queue,
+            queue_in_data=None,
+            queue_out_image=self.detected_image_queue,
+            queue_out_data=self.detected_data_queue,
             window_name='rgb-image-detected',
             image_process_func=self.tf_net.detect,
         )
@@ -39,13 +42,16 @@ class ImageDetectorNode():
         ## init depth image utilites
         self.depth_image_queue = BufferQueue(self.queueSize)
         self.segmented_image_queue = BufferQueue(self.queueSize)
+        self.segmented_data_queue = BufferQueue(self.queueSize)
         self.depth_image_sub = rospy.Subscriber(
             '/depth_camera/depth/image_raw',
             Image,
             self.depth_image_callback)
         self.depth_camera_thread = ProcessThread(
-            queue_in=self.depth_image_queue,
-            queue_out=self.segmented_image_queue,
+            queue_in_image=self.depth_image_queue,
+            queue_in_data=self.detected_data_queue,
+            queue_out_image=self.segmented_image_queue,
+            queue_out_data=self.segmented_data_queue,
             window_name='depth-image-segmented',
             image_process_func=self.same,
         )
@@ -90,8 +96,9 @@ class ImageDetectorNode():
         else:
             self.depth_image_queue.put(cv_image_norm)
 
-    def same(self, image):
-        return image
+    def same(self, img, _input):
+        image = img
+        return [image, True]
 
     def segment(self, image, depth_image, boxes, scores, classes, nums):
         input_tuple = self.detected_image_queue.get()
