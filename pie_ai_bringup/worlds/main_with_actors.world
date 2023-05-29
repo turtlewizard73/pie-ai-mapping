@@ -21,7 +21,7 @@
 
 
     <actor name="Steve">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>-3.57 -9.87 0.3 0 0 3.14</pose>
       <skin>
         <filename>model://HoverBoardMale/meshes/maleHB.dae</filename>
         <scale>1.0</scale>
@@ -31,62 +31,6 @@
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
       </animation>
-      <script>
-        <trajectory id="0" type="walking">
-          <waypoint>
-            <time>0</time>
-            <pose>-3.57 -15.45 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>8</time>
-            <pose>-3.57 -10.4 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>9</time>
-            <pose>-3.57 -10.09 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>11</time>
-            <pose>-4.2 -9.26 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>13</time>
-            <pose>-4.2 -7.04 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>15</time>
-            <pose>-3 -6.5 0.3 0 0 1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>21</time>
-            <pose>2.59 -6.5 0.3 0 0 1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>23.5</time>
-            <pose>3.22 -8.15 0.3 0 0 0</pose>
-          </waypoint>
-          <waypoint>
-            <time>26</time>
-            <pose>1.87 -10.04 0.3 0 0 -1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>31</time>
-            <pose>-2.11 -10.04 0.3 0 0 -1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>33</time>
-            <pose>-3.57 -10.99 0.3 0 0 0</pose>
-          </waypoint>
-          <waypoint>
-            <time>40</time>
-            <pose>-3.57 -15.45 0.3 0 0 0</pose>
-          </waypoint>
-          <waypoint>
-            <time>41.5</time>
-            <pose>-3.57 -15.45 0.3 0 0 3.14</pose>
-          </waypoint>
-        </trajectory>
-      </script>
     </actor>
 
 
@@ -129,7 +73,7 @@
 
 
     <actor name="Emily">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>-3 0 0.3 0 0 1.57</pose>
       <skin>
         <filename>model://HoverBoardFemale/meshes/femaleHB.dae</filename>
         <scale>1.0</scale>
@@ -142,24 +86,24 @@
       <script>
         <trajectory id="0" type="walking">
           <waypoint>
-            <time>3</time>
-            <pose>-3 0 0.3 0 0 1.57</pose>
+            <time>0</time>
+            <pose>1.21 -0.38 0.3 0 0 3.14</pose>
           </waypoint>
           <waypoint>
-            <time>12</time>
-            <pose>1 0 0.3 0 0 1.57</pose>
+            <time>5</time>
+            <pose>1.21 4 0.3 0 0 3.14</pose>
+          </waypoint>
+          <waypoint>
+            <time>7</time>
+            <pose>1.5 4 0.3 0 0 0</pose>
           </waypoint>
           <waypoint>
             <time>13</time>
-            <pose>1 -0.33 0.3 0 0 -1.57</pose>
+            <pose>1.5 -0.38 0.3 0 0 0</pose>
           </waypoint>
           <waypoint>
-            <time>26.5</time>
-            <pose>-3 -0.33 0.3 0 0 -1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>28</time>
-            <pose>-3 0 0.3 0 0 1.57</pose>
+            <time>15</time>
+            <pose>1.21 -0.33 0.3 0 0 3.14</pose>
           </waypoint>
         </trajectory>
       </script>
@@ -167,7 +111,7 @@
 
 
     <actor name="Joe">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>-3.78 6.17 0.3 0 0 2.97 </pose>
       <skin>
         <filename>model://HoverBoardMale/meshes/maleHB.dae</filename>
         <scale>1.0</scale>
@@ -177,66 +121,6 @@
         <scale>1.000000</scale>
         <interpolate_x>true</interpolate_x>
       </animation>
-      <script>
-        <trajectory id="0" type="walking">
-          <waypoint>
-            <time>0</time>
-            <pose>-3.65 5.31 0.3 0 0 0.0</pose>
-          </waypoint>
-          <waypoint>
-            <time>2</time>
-            <pose>-3.65 2.9 0.3 0 0 0.0</pose>
-          </waypoint>
-          <waypoint>
-            <time>4</time>
-            <pose>-2.2 1.67 0.3 0 0 1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>6</time>
-            <pose>-0.46 1.67 0.3 0 0 1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>8</time>
-            <pose>0.17 3.39 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>10</time>
-            <pose>0.17 5.24 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>12</time>
-            <pose>1.45 6.23 0.3 0 0 1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>14</time>
-            <pose>2.47 5.24 0.3 0 0 0.0</pose>
-          </waypoint>
-          <waypoint>
-            <time>16</time>
-            <pose>2.47 3.11 0.3 0 0 0.0</pose>
-          </waypoint>
-          <waypoint>
-            <time>18</time>
-            <pose>1.31 1.67 0.3 0 0 -1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>20</time>
-            <pose>-2.2 1.67 0.3 0 0 -1.57</pose>
-          </waypoint>
-          <waypoint>
-            <time>22</time>
-            <pose>-3.65 2.9 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>26</time>
-            <pose>-3.65 5 0.3 0 0 3.14</pose>
-          </waypoint>
-          <waypoint>
-            <time>28</time>
-            <pose>-3.65 5.31 0.3 0 0 0.0</pose>
-          </waypoint>
-        </trajectory>
-      </script>
     </actor>
 
 
@@ -536,7 +420,7 @@
       <pose>3.41848 -3.17007 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>2986 332000000</sim_time>
+      <sim_time>0 0</sim_time>
       <real_time>69 481165577</real_time>
       <wall_time>1685217240 662349348</wall_time>
       <iterations>68142</iterations>

@@ -3,12 +3,13 @@
 <launch>
 
   <arg name="rvizconfig" default="$(find pie_ai_bringup)/config/pie_sim.rviz" />
-  <arg name="world" default="$(find pie_ai_bringup)/worlds/test_features.world" />
+  <arg name="world" default="$(find pie_ai_bringup)/worlds/main_with_actors.world" />
   <arg name="map_file" default="$(find pie_bringup)/maps/world_basic/map.yaml"/>
-  <arg name="x_pos" default="0.0"/>
-  <arg name="y_pos" default="0.0"/>
-  <arg name="z_pos" default="0.0"/>
-  <arg name="yaw_pos" default="1.57"/>
+  <arg name="x_pos" default="3"/>
+  <arg name="y_pos" default="1"/>
+  <arg name="z_pos" default="1"/>
+  <arg name="yaw_pos" default="0"/>
+
 
   <!-- Launch simulation with camera -->
   <include file="$(find pie_bringup)/launch/simulation.launch">
