@@ -29,3 +29,5 @@ people detection:
         https://medium.com/analytics-vidhya/image-segmentation-with-yolov3-and-grabcut-59a0abaafa3e
         https://github.com/Cuda-Chen/fish-yolo-grabcut/blob/master/utils/GrabCut.py
         https://pyimagesearch.com/2021/01/19/image-masking-with-opencv/
+
+install: bottleneck

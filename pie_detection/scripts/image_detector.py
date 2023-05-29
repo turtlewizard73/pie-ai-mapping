@@ -100,6 +100,7 @@ class ImageDetectorNode():
         return [image, True]
 
     def segment(self, depth_image, _input):
+        segmented_depth_img, output = None, None
         # _inpu = [boxes[0], scores[0], classes[0], nums[0]]
         boxes, scores, classes, nums = _input[0], _input[1], _input[2], _input[3]
         boxes=np.array(boxes)
@@ -121,10 +122,10 @@ class ImageDetectorNode():
             # max_distance = np.nanmax(segmented_depth_img)
 
         # output = [mean_distance, min_distance, max_distance, x1, x2]
-        output = CamPose()
-        output.mean_depth = mean_distance
-        output.x_min = x1
-        output.x_max = x2
+            output = CamPose()
+            output.mean_depth = mean_distance
+            output.x_min = x1
+            output.x_max = x2
         # output = [mean_distance, x1, x2]
         return segmented_depth_img, output
 
