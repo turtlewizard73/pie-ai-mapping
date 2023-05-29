@@ -73,12 +73,12 @@ class PoseEnplacer():
             marker.pose.orientation.z = 0
             marker.pose.orientation.w = 0
 
-            marker.scale.x = 0.2
+            marker.scale.x = 0.45
             marker.scale.y = valid_x_max - valid_x_min
             marker.scale.z = 0.1
             marker.color.a = 1.0 # Don't forget to set the alpha!
-            marker.color.r = 0.0
-            marker.color.g = 1.0
+            marker.color.r = 1.0 if name == 'person' else 0.0
+            marker.color.g = 1.0 if (name == 'chair') or (name == 'sofa') else 0.0
             marker.color.b = 0.0
 
             i = i+1
