@@ -1,9 +1,3 @@
-(YOLOv7)
-torch
-pandas
-torchvision
-seaborn
-scipy
-
-(CUSTOM)
-...
+tensorflow
+opencv-python
+bottleneck

@@ -36,3 +36,49 @@ https://github.com/RahmadSadli/Deep-Learning/tree/master/YOLOv3_TF2
 install: bottleneck
 
 ## Setup and install
+1. **Clone repository and update submodules**
+    ```
+    mkdir -p workspace/src
+    cd workspace/src
+    git clone https://github.com/turtlewizard73/pie-mapping-and-navigation.git
+    git clone https://github.com/turtlewizard73/pie-ai-mapping.git
+    ```
+
+2. **Checkout on development and update submodules**
+    ```
+    cd src/pie-mapping-and-navigation
+    git fetch
+    git checkout development
+    git pull
+    git submodule update --init --recursive
+
+    cd src/pie-ai-mapping
+    git fetch
+    git checkout development
+    git pull
+    git submodule update --init --recursive
+    ```
+
+3. **Build gazebo actors plugin**
+    ```
+    cd src/pie-mapping-and-navigation/gazebo_actor_collisions_plugin
+    mkdir build
+    cd build
+    cmake ..
+    make
+    export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:$(pwd)
+    ```
+
+4. **Install dependencies and build the packages**
+    ```
+    cd workspace/src/pie-mapping-and-navigation
+    sudo xargs -a apt-dependencies.txt apt install -y
+
+    cd workspace/src/pie-ai-mapping
+    sudo xargs -a apt-dependencies.txt apt install -y
+    pip3 install -r pip-dependencies.txt
+
+    cd workspace
+    catkin_make
+    source devel/setup.bash
+    ```
