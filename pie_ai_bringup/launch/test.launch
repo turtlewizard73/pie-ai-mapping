@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="rvizconfig" default="$(find pie_ai_bringup)/config/pie_sim.rviz" />
+  <arg name="world" default="$(find pie_ai_bringup)/worlds/test_features_humans.world" />
+  <arg name="map_file" default="$(find pie_ai_bringup)/maps/map.yaml"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="yaw_pos" default="1.57"/>
+
+  <!-- Launch simulation with camera -->
+  <include file="$(find pie_bringup)/launch/simulation.launch">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="x_pos" value="$(arg x_pos)"/>
+    <arg name="y_pos" value="$(arg y_pos)"/>
+    <arg name="z_pos" value="$(arg z_pos)"/>
+    <arg name="yaw_pos" value="$(arg yaw_pos)"/>
+    <arg name="visualize_laser" value="false"/>
+    <arg name="use_camera" value="false"/>
+    <arg name="visualize_camera" value="true"/>
+    <arg name="use_rgbd_camera" value="true"/>
+    <arg name="visualize_rgbd_camera" value="true"/>
+    <arg name="gazebo_gui" value="false"/>
+  </include>
+
+  <!-- Launch Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+
+  <!-- <node name="image_detector" pkg="pie_detection" type="image_detector.py"/> -->
+
+    <!-- Map Server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+  </node>
+
+  <!-- AMCL Node -->
+  <arg name="initial_pose_x"  default="0.0"/>
+  <arg name="initial_pose_y"  default="0.0"/>
+  <arg name="initial_pose_a"  default="1.57"/>
+  <arg name="move_forward_only"  default="false"/>
+
+  <node name="amcl" pkg="amcl" type="amcl" output="screen">
+    <param name="odom_frame_id" value="odom"/>
+    <param name="odom_model_type" value="diff-corrected"/>
+    <param name="base_frame_id" value="base_link"/>
+    <param name="global_frame_id" value="map"/>
+    <param name="scan_topic" value="scan"/>
+    <!-- If you choose to define initial pose here -->
+    <param name="initial_pose_x" value="$(arg x_pos)"/>
+    <param name="initial_pose_y" value="$(arg y_pos)"/>
+    <param name="initial_pose_a" value="$(arg yaw_pos)"/>
+    <!-- Parameters for inital particle distribution -->
+    <param name="initial_cov_xx" value="9.0"/>
+    <param name="initial_cov_yy" value="9.0"/>
+    <param name="initial_cov_aa" value="9.8"/>
+    <!-- Dynamically adjusts particles for every iteration -->
+    <param name="min_particles" value="500"/>
+    <param name="max_particles" value="2000"/>
+    <!-- Perform update parameters -->
+    <param name="update_min_d" value="0.1"/>
+    <param name="update_min_a" value="0.1"/>
+    <param name="laser_model_type" value="likelihood_field"/>
+    <param name="laser_max_range" value="-1.0"/>
+    <param name="odom_alpha1" value="0.1"/>
+    <param name="odom_alpha2" value="0.1"/>
+    <param name="odom_alpha3" value="0.3"/>
+    <param name="odom_alpha4" value="0.1"/>
+    <param name="odom_alpha5" value="0.1"/>
+    <!-- Transform tolerance needed on slower machines -->
+    <param name="transform_tolerance" value="1.0"/>
+  </node>
+</launch>
