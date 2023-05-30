@@ -11,9 +11,11 @@ from sensor_msgs.msg import Image, CompressedImage, CameraInfo
 from geometry_msgs.msg import Twist, Point
 import rospy
 from pie_detection.msg import CamPose, CamPoses
+
 # Custom modules
 from yolov3_net import YoloV3Net
 from cvthread import ProcessThread, cvThread, BufferQueue
+
 
 class ImageDetectorNode():
     def __init__(self) -> None:
@@ -113,6 +115,7 @@ class ImageDetectorNode():
         output_img = np.zeros(depth_image.shape[:2], np.float32)
         for i in range(nums):
             cam_pose = CamPose()
+
             mask_rectangle = np.zeros(depth_image.shape[:2], np.float32)
             x1, y1 = tuple((boxes[i,0:2] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
             x2, y2 = tuple((boxes[i,2:4] * [depth_image.shape[1], depth_image.shape[0]]).astype(np.int32))
@@ -140,6 +143,7 @@ class ImageDetectorNode():
         output.poses = poses
         print(output)
         return output_img, output
+
 
 
 def main():
