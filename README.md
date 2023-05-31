@@ -1,6 +1,12 @@
 # pie-ai-mapping
 Repo for Kognitív robotika 2022-23/II project
 
+Made by:
+- László Máté (K9QU7H)
+- Lipták Gergő (OFVA8T)
+- Kántor Balázs (JZZ6FX)
+- Borsi Máté (G4I8MN)
+
 Here you can see a screenshot of the main launch file running. Inside it you can see the main rviz window, with the rgb camera image and depth camera image in the lower left, and two other windows, the first one (rgb-image-detected) is based on the rgb camera image, and has the yolo (neural network based object detection system) markers over it, the second one (depth-image-segmented), has the previously said method based objects segmented out. After doing some math on these segmented parts, we can calculate their distances from the robot, and visualize them on the map with green boxes.
 
 ![Screenshot of the main launch file running](assets/kogrob_ai_mapping_img.png)
@@ -54,12 +60,6 @@ Here you can see that you need to start the test.launch to start the simulation 
 
     cd ~/workspace
     catkin_make
-
-    cd ~/workspace/src/yolov7
-    pip install -r requirements.txt
-    catkin_make --make-args run_tests
-
-    cd ~/workspace
     source devel/setup.bash
     ```
     Follow this guide for tensorflow installation: https://towardsdatascience.com/how-to-finally-install-tensorflow-gpu-on-wsl2-7be59e278f92
