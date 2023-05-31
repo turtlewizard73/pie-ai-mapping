@@ -98,3 +98,8 @@ Here you can see that you need to start the test.launch to start the simulation 
     ```
     rosrun pie_detection pose_enplace.py
     ```
+
+
+## Further development ideas:
+1. Update yolov3 to yolov5
+2. Variable z height for the emplaced markers
